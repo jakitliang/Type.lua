@@ -17,7 +17,7 @@ So `Type.lua` is invented for easily used and easily understand.
 
 Using `Type.lua`, you can get benefits below
 
-### 1. Check type
+### 1. Check type and make inheritance
 
 Let's check `b` is a `Base`.
 
@@ -43,6 +43,9 @@ print(Type.get(b) == Base) -- Will also print "true"
 
 local Derived = {}
 
+-- Make Derived inherit from Base
+Type.extends(Derived, Base)
+
 function Derived()
   local o = {}
 
@@ -53,6 +56,30 @@ local d = Derived.new()
 
 print(Type.is(d, Derived)) -- Will print "true"
 print(Type.is(d, Base))    -- Will print "true", too
+```
+
+#### 1.1 Inherit
+
+**If you forget to extend the type. The relationship between two type will not be made up.**
+
+```lua
+--- Make the child type inherit to the parent type
+--- @param child table Child type
+--- @param parent table Parent type
+Type.extends = function (child, parent)
+```
+
+#### 1.2 Set the object's type
+
+**If you forget to set the type. The object will be a normal lua table at all.**
+
+```lua
+--- Set object point to type
+--- @param obj table Instance object
+--- @param _type table Target type
+--- @param meta table|nil Metatable to be set
+--- @return table obj Configured object
+Type.set = function (obj, _type, meta)
 ```
 
 ### 2. Initializers
